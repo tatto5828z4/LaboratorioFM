@@ -174,7 +174,23 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
+            //Codigo que permite borrar registros en la base de datos
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("delete from Autor where id_autor = ?");
+
+            pst.setString(1, txt_id.getText().trim());
+            pst.executeUpdate();
+
+            txt_nombre.setText("");
+            txt_apellido.setText("");
+            txt_ciudad.setText("");
+            jButton4.setText("");
+
+            label_status.setText("Registro eliminado.");
+
+        } catch (Exception e) {
+        }       
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txt_apellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_apellidoActionPerformed
@@ -183,7 +199,24 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //Codigo que permite consultar registros en la base de datos
-        
+        try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("select * from Autor where id_autor = ?");
+            pst.setString(1, txt_id.getText().trim());
+
+            ResultSet rs = pst.executeQuery();
+
+            if(rs.next()){
+                txt_nombre.setText(rs.getString("nombre_autor"));
+                txt_apellido.setText(rs.getString("apellido_autor"));
+                txt_ciudad.setText(rs.getString("ciudad_autor"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Alumno no registrado.");
+            }
+
+        }catch (Exception e){
+
+        }        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txt_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idActionPerformed
@@ -192,6 +225,24 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Codigo que permite insertar registros en al base de datos
+        try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("insert into Autor values(?,?,?,?)");
+
+            pst.setString(1, txt_id.getText().trim());
+            pst.setString(2, txt_nombre.getText().trim());
+            pst.setString(3, txt_apellido.getText().trim());
+            pst.setString(4, txt_ciudad.getText().trim());
+            pst.executeUpdate();
+
+            txt_id.setText("");
+            txt_nombre.setText("");
+            txt_apellido.setText("");
+            txt_ciudad.setText("");
+            label_status.setText("Registro exitoso.");
+        }catch (Exception e){
+
+        }
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -201,7 +252,21 @@ public class MantenimientoAutor extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Codigo que permite actualizar registros en la base de datos
-        
+        try {
+            String ID = txt_id.getText().trim();
+
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("update Autor set nombre_autor = ?, apellido_autor=?, ciudad_autor=? where id_autor = " + ID);
+
+            pst.setString(1, txt_nombre.getText().trim());
+            pst.setString(2, txt_apellido.getText().trim());
+            pst.setString(3, txt_ciudad.getText().trim());
+            pst.executeUpdate();
+
+            label_status.setText("Modificación exitosa.");
+
+        } catch (Exception e) {
+        }        
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

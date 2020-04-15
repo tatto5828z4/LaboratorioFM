@@ -219,22 +219,103 @@ public class MantenimientoCliente extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Codigo que permite insertar registros en al base de datos
+        try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("insert into cliente values(?,?,?,?,?,?)");
+
+            pst.setString(1, txt_dpi.getText().trim());
+            pst.setString(2, txt_nombre.getText().trim());
+            pst.setString(3, txt_correo.getText().trim());
+            pst.setString(4, txt_telefono.getText().trim());
+            pst.setString(5, txt_tarjeta.getText().trim());
+            pst.setString(6, txt_idempleado.getText().trim());
+            pst.executeUpdate();
+
+            txt_dpi.setText("");
+            txt_nombre.setText("");
+            txt_correo.setText("");
+            txt_telefono.setText("");
+            txt_tarjeta.setText("");
+            txt_idempleado.setText("");
+            label_status.setText("Registro exitoso.");
+        }catch (Exception e){
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Codigo que permite actualizar registros en la base de datos
+        try {
+            String ID = txt_dpi.getText().trim();
+
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("update cliente set cui_cliente = ?, nombre_cliente=?, correo_cliente=?, telefono_cliente=?, num_tarjeta=?  where cui_cliente = " + ID);
+
+            pst.setString(1, txt_dpi.getText().trim());
+            pst.setString(2, txt_nombre.getText().trim());
+            pst.setString(3, txt_correo.getText().trim());
+            pst.setString(4, txt_telefono.getText().trim());
+            pst.setString(5, txt_tarjeta.getText().trim());
+            pst.executeUpdate();
+
+            txt_dpi.setText("");
+            txt_nombre.setText("");
+            txt_correo.setText("");
+            txt_telefono.setText("");
+            txt_tarjeta.setText("");
+            txt_idempleado.setText("");
+            label_status.setText("Modificación exitosa.");
+
+        } catch (Exception e) {
+        }
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         //Codigo que permite borrar registros en la base de datos
-        
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("delete from cliente where cui_cliente = ?");
+
+            pst.setString(1, txt_dpi.getText().trim());
+            pst.executeUpdate();
+
+            txt_nombre.setText("");
+            txt_correo.setText("");
+            txt_telefono.setText("");
+            txt_tarjeta.setText("");
+            txt_idempleado.setText("");
+            jButton4.setText("");
+
+            label_status.setText("Registro eliminado.");
+
+        } catch (Exception e) {
+        }
 
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //Codigo que permite consultar registros en la base de datos
-        
+        try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("select * from cliente where cui_cliente = ?");
+            pst.setString(1, txt_dpi.getText().trim());
+
+            ResultSet rs = pst.executeQuery();
+
+            if(rs.next()){
+                txt_nombre.setText(rs.getString("nombre_cliente"));
+                txt_correo.setText(rs.getString("correo_cliente"));
+                txt_telefono.setText(rs.getString("telefono_cliente"));
+                txt_tarjeta.setText(rs.getString("num_tarjeta"));
+                txt_idempleado.setText(rs.getString("id_empleado"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Alumno no registrado.");
+            }
+
+        }catch (Exception e){
+
+        }
 
     }//GEN-LAST:event_jButton4ActionPerformed
 

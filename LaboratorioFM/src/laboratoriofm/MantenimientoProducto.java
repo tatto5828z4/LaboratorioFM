@@ -222,7 +222,24 @@ public class MantenimientoProducto extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         //Codigo que permite borrar registros en la base de datos
-        
+        try {
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("delete from Producto where id_producto = ?");
+
+            pst.setString(1, txt_id.getText().trim());
+            pst.executeUpdate();
+
+            txt_nombre.setText("");
+            txt_cantidad.setText("");
+            txt_tipo.setText("");
+            txt_precio.setText("");
+            txt_estado.setText("");
+            jButton4.setText("");
+
+            label_status.setText("Registro eliminado.");
+
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void txt_cantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_cantidadActionPerformed
@@ -231,7 +248,27 @@ public class MantenimientoProducto extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         //Codigo que permite consultar registros en la base de datos
-        
+        try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("select * from Producto where id_producto = ?");
+            pst.setString(1, txt_id.getText().trim());
+
+            ResultSet rs = pst.executeQuery();
+
+            if(rs.next()){
+                txt_nombre.setText(rs.getString("nombre_producto"));
+                txt_cantidad.setText(rs.getString("cantidad_producto"));
+                txt_tipo.setText(rs.getString("tipo_producto"));
+                txt_precio.setText(rs.getString("precio_producto"));
+                txt_estado.setText(rs.getString("estado_producto"));
+                txt_idautor.setText(rs.getString("id_autor"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Alumno no registrado.");
+            }
+
+        }catch (Exception e){
+
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txt_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_idActionPerformed
@@ -240,7 +277,29 @@ public class MantenimientoProducto extends javax.swing.JInternalFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //Codigo que permite insertar registros en al base de datos
-        
+        try{
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("insert into Producto values(?,?,?,?,?,?, ?)");
+
+            pst.setString(1, txt_id.getText().trim());
+            pst.setString(2, txt_nombre.getText().trim());
+            pst.setString(3, txt_cantidad.getText().trim());
+            pst.setString(4, txt_tipo.getText().trim());
+            pst.setString(5, txt_precio.getText().trim());
+            pst.setString(6, txt_estado.getText().trim());
+            pst.setString(7, txt_idautor.getText().trim());
+            pst.executeUpdate();
+
+            txt_id.setText("");
+            txt_nombre.setText("");
+            txt_cantidad.setText("");
+            txt_tipo.setText("");
+            txt_precio.setText("");
+            txt_estado.setText("");
+            label_status.setText("Registro exitoso.");
+        }catch (Exception e){
+
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txt_tipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tipoActionPerformed
@@ -249,7 +308,23 @@ public class MantenimientoProducto extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         //Codigo que permite actualizar registros en la base de datos
-        
+        try {
+            String ID = txt_id.getText().trim();
+
+            Connection cn = DriverManager.getConnection("jdbc:mysql://localhost/FilmMagic", "root", "jorgito5828H");
+            PreparedStatement pst = cn.prepareStatement("update Producto set nombre_producto = ?, cantidad_producto=?, tipo_producto=?, precio_producto=?,estado_producto=?  where id_producto = " + ID);
+
+            pst.setString(1, txt_nombre.getText().trim());
+            pst.setString(2, txt_cantidad.getText().trim());
+            pst.setString(3, txt_tipo.getText().trim());
+            pst.setString(4, txt_precio.getText().trim());
+            pst.setString(5, txt_estado.getText().trim());
+            pst.executeUpdate();
+
+            label_status.setText("Modificación exitosa.");
+
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
 

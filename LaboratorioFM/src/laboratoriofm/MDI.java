@@ -15,6 +15,10 @@ public class MDI extends javax.swing.JFrame {
     /**
      * Creates new form Progra
      */   
+    private MantenimientoEmpleado ventanaEmpleado;
+    private MantenimientoCliente ventanaCliente;
+    private MantenimientoAutor ventanaAutor;
+    private MantenimientoProducto ventanaProducto;
     public MDI() {
         initComponents();
     }
@@ -126,20 +130,24 @@ public class MDI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
+         ventanaCliente = new MantenimientoCliente();
+         jDesktopPane1.add(ventanaCliente);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-       
+       ventanaEmpleado = new MantenimientoEmpleado();
+        jDesktopPane1.add(ventanaEmpleado);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-      
+        ventanaAutor = new MantenimientoAutor();
+        jDesktopPane1.add(ventanaAutor);      
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-       
+        ventanaProducto = new MantenimientoProducto();
+        jDesktopPane1.add(ventanaProducto);       
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
